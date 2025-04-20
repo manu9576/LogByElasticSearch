@@ -7,7 +7,9 @@ namespace ApiLogElastic.Controllers;
 [Route("api/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-	string[] _summaries =
+	private readonly ILogger<WeatherForecastController> _logger;
+
+	private string[] _summaries =
 	[
 		"Freezing",
 		"Bracing",
@@ -21,9 +23,16 @@ public class WeatherForecastController : ControllerBase
 		"Scorching"
 	];
 
+	public WeatherForecastController(ILogger<WeatherForecastController> logger)
+	{
+		_logger = logger;
+	}
+
 	[HttpGet]
 	public ActionResult<IEnumerable<WeatherForecast>> Get()
 	{
+		_logger.LogInformation("WeatherForecastController Get executed at {date}", DateTime.UtcNow);
+
 		Random rng = new();
 
 		IEnumerable<WeatherForecast> forecast =
