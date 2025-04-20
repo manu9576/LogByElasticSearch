@@ -1,8 +1,6 @@
-using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
-using System.Reflection;
 
 internal class Program
 {
@@ -71,5 +69,4 @@ internal class Program
 			IndexFormat = indexFormat
 		};
 	}
-
 }
