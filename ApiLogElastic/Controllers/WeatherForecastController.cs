@@ -7,7 +7,7 @@ namespace ApiLogElastic.Controllers;
 [Route("api/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-	string[] summaries =
+	string[] _summaries =
 	[
 		"Freezing",
 		"Bracing",
@@ -22,17 +22,18 @@ public class WeatherForecastController : ControllerBase
 	];
 
 	[HttpGet]
-	public IEnumerable<WeatherForecast> Get()
+	public ActionResult<IEnumerable<WeatherForecast>> Get()
 	{
-		Random rng = new Random();
-		IEnumerable<WeatherForecast> forecast = 
+		Random rng = new();
+
+		IEnumerable<WeatherForecast> forecast =
 			Enumerable
 				.Range(1, 5)
 				.Select(index => new WeatherForecast(
 					Date: DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
 					TemperatureC: rng.Next(-20, 55),
-					Summary: summaries[rng.Next(summaries.Length)]));
+					Summary: _summaries[rng.Next(_summaries.Length)]));
 
-		return [.. forecast];
+		return Ok(forecast);
 	}
 }
